@@ -1,3 +1,4 @@
+import os
 import io
 import streamlit as st
 from PIL import Image
@@ -5,7 +6,8 @@ import torch
 from torchvision import transforms
 from model_def import ClassificationImageModel
 
-PATH = 'ml\model.pth'
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+PATH = os.path.join(BASE_DIR, 'ml', 'model.pth')
 classes = ["T-shirt/top", "Trouser", "Pullover", "Dress", "Coat", "Sandal", "Shirt", "Sneaker", "Bag", "Ankle boot"]
 
 
