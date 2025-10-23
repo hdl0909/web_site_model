@@ -6,14 +6,13 @@ from torchvision import transforms
 from model_def import ClassificationImageModel
 
 PATH = 'ml\model.pth'
-device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 classes = ["T-shirt/top", "Trouser", "Pullover", "Dress", "Coat", "Sandal", "Shirt", "Sneaker", "Bag", "Ankle boot"]
 
 
 @st.cache_data
 def load_model():
-    model = ClassificationImageModel().to(device)
-    model.load_state_dict(torch.load(PATH, weights_only=False))
+    model = ClassificationImageModel()
+    model.load_state_dict(torch.load(PATH, map_location='cpu', weights_only=False))
     model.eval()
     return model
 
@@ -38,7 +37,7 @@ def preprocess_image(img):
     return img.unsqueeze(0)
 
 def print_prediction(img, model):
-    outputs = model(img.to(device))
+    outputs = model(img)
     _, predicted = torch.max(outputs, 1)
     st.write(classes[predicted])
 
